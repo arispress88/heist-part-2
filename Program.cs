@@ -10,6 +10,16 @@ namespace Heist
             Console.WriteLine("Plan your heist!");
             Console.WriteLine("--------------------");
 
+            Bank bank = new Bank();
+            bank.GenerateBankValues();
+
+            Console.WriteLine("Recon Report:");
+            Console.WriteLine($"Most Secure: {GetSystemName(bank.GetMostSecureSystem())}");
+            Console.WriteLine($"Least Secure: {GetSystemName(bank.GetLeastSecureSystem())}");
+
+            Console.WriteLine("--------------------");
+
+
             List<IRobber> rolodex = new List<IRobber>();
             rolodex.Add(new Hacker()
             {
@@ -45,7 +55,7 @@ namespace Heist
                 SkillLevel = 60,
                 PercentageCut = 10
             });
-            
+
             while (true)
             {
                 Console.WriteLine($"There are currently {rolodex.Count} operatives in the rolodex.");
@@ -54,7 +64,7 @@ namespace Heist
 
                 if (string.IsNullOrWhiteSpace(newOperativeName))
                 {
-                    break; // Exit the loop if the name is blank
+                    break; // Exits the loop if the name is blank
                 }
 
                 Console.WriteLine($"Choose from the following specialties:");
@@ -144,6 +154,22 @@ namespace Heist
             }
 
             Console.WriteLine($"Total number of operatives in the rolodex: {rolodex.Count}");
+        }
+
+        private static string GetSystemName (string system)
+        {
+            switch (system)
+            {
+                case "AlarmScore":
+                    return "Alarm";
+                case "VaultScore":
+                    return "Vault";
+                case "SecurityGuardScore":
+                    return "Security Guard";
+                default:
+                    return "Unknown";
+                
+            }
         }
     }
 }
